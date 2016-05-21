@@ -111,6 +111,7 @@ from .cbc import (
     CBCPlayerIE,
 )
 from .cbs import CBSIE
+from .cbslocal import CBSLocalIE
 from .cbsinteractive import CBSInteractiveIE
 from .cbsnews import (
     CBSNewsIE,
@@ -370,6 +371,7 @@ from .kuwo import (
 )
 from .la7 import LA7IE
 from .laola1tv import Laola1TvIE
+from .learnr import LearnrIE
 from .lecture2go import Lecture2GoIE
 from .lemonde import LemondeIE
 from .leeco import (
@@ -395,6 +397,7 @@ from .livestream import (
     LivestreamShortenerIE,
 )
 from .lnkgo import LnkGoIE
+from .localnews8 import LocalNews8IE
 from .lovehomeporn import LoveHomePornIE
 from .lrt import LRTIE
 from .lynda import (
@@ -668,6 +671,7 @@ from .screencastomatic import ScreencastOMaticIE
 from .screenjunkies import ScreenJunkiesIE
 from .screenwavemedia import ScreenwaveMediaIE, TeamFourIE
 from .senateisvp import SenateISVPIE
+from .sendtonews import SendtoNewsIE
 from .servingsys import ServingSysIE
 from .sexu import SexuIE
 from .shahid import ShahidIE
