@@ -44,7 +44,6 @@ from .archiveorg import ArchiveOrgIE
 from .ard import (
     ARDIE,
     ARDMediathekIE,
-    SportschauIE,
 )
 from .arte import (
     ArteTvIE,
@@ -71,6 +70,8 @@ from .bandcamp import BandcampIE, BandcampAlbumIE
 from .bbc import (
     BBCCoUkIE,
     BBCCoUkArticleIE,
+    BBCCoUkIPlayerPlaylistIE,
+    BBCCoUkPlaylistIE,
     BBCIE,
 )
 from .beeg import BeegIE
@@ -108,6 +109,10 @@ from .camwithher import CamWithHerIE
 from .canalplus import CanalplusIE
 from .canalc2 import Canalc2IE
 from .canvas import CanvasIE
+from .carambatv import (
+    CarambaTVIE,
+    CarambaTVPageIE,
+)
 from .cbc import (
     CBCIE,
     CBCPlayerIE,
@@ -512,7 +517,10 @@ from .nhl import (
     NHLVideocenterCategoryIE,
     NHLIE,
 )
-from .nick import NickIE
+from .nick import (
+    NickIE,
+    NickDeIE,
+)
 from .niconico import NiconicoIE, NiconicoPlaylistIE
 from .ninegag import NineGagIE
 from .noco import NocoIE
@@ -738,6 +746,7 @@ from .sportbox import (
     SportBoxEmbedIE,
 )
 from .sportdeutschland import SportDeutschlandIE
+from .sportschau import SportschauIE
 from .srgssr import (
     SRGSSRIE,
     SRGSSRPlayIE,
