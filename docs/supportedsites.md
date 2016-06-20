@@ -128,6 +128,7 @@
  - **cliphunter**
  - **ClipRs**
  - **Clipsyndicate**
+ - **CloserToTruth**
  - **cloudtime**: CloudTime
  - **Cloudy**
  - **Clubic**
@@ -521,6 +522,7 @@
  - **qqmusic:singer**: QQ音乐 - 歌手
  - **qqmusic:toplist**: QQ音乐 - 排行榜
  - **R7**
+ - **R7Article**
  - **radio.de**
  - **radiobremen**
  - **radiocanada**

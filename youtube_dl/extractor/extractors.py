@@ -140,6 +140,7 @@ from .cliprs import ClipRsIE
 from .clipfish import ClipfishIE
 from .cliphunter import CliphunterIE
 from .clipsyndicate import ClipsyndicateIE
+from .closertotruth import CloserToTruthIE
 from .cloudy import CloudyIE
 from .clubic import ClubicIE
 from .clyp import ClypIE
@@ -630,7 +631,10 @@ from .qqmusic import (
     QQMusicToplistIE,
     QQMusicPlaylistIE,
 )
-from .r7 import R7IE
+from .r7 import (
+    R7IE,
+    R7ArticleIE,
+)
 from .radiocanada import (
     RadioCanadaIE,
     RadioCanadaAudioVideoIE,
