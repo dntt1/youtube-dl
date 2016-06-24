@@ -146,7 +146,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
                             \.
                         )?
                         vimeo(?P<pro>pro)?\.com/
-                        (?!channels/[^/?#]+/?(?:$|[?#])|[^/]+/review/|(?:album|ondemand)/)
+                        (?!(?:channels|album)/[^/?#]+/?(?:$|[?#])|[^/]+/review/|ondemand/)
                         (?:.*?/)?
                         (?:
                             (?:
@@ -227,8 +227,6 @@ class VimeoIE(VimeoBaseInfoExtractor):
         {
             'url': 'http://vimeo.com/channels/keypeele/75629013',
             'md5': '2f86a05afe9d7abc0b9126d229bbe15d',
-            'note': 'Video is freely available via original URL '
-                    'and protected with password when accessed via http://vimeo.com/75629013',
             'info_dict': {
                 'id': '75629013',
                 'ext': 'mp4',
@@ -272,7 +270,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         {
             # contains original format
             'url': 'https://vimeo.com/33951933',
-            'md5': '53c688fa95a55bf4b7293d37a89c5c53',
+            'md5': '2d9f5475e0537f013d0073e812ab89e6',
             'info_dict': {
                 'id': '33951933',
                 'ext': 'mp4',
@@ -285,12 +283,39 @@ class VimeoIE(VimeoBaseInfoExtractor):
             },
         },
         {
+            # only available via https://vimeo.com/channels/tributes/6213729 and
+            # not via https://vimeo.com/6213729
+            'url': 'https://vimeo.com/channels/tributes/6213729',
+            'info_dict': {
+                'id': '6213729',
+                'ext': 'mp4',
+                'title': 'Vimeo Tribute: The Shining',
+                'uploader': 'Casey Donahue',
+                'uploader_url': 're:https?://(?:www\.)?vimeo\.com/caseydonahue',
+                'uploader_id': 'caseydonahue',
+                'upload_date': '20090821',
+                'description': 'md5:bdbf314014e58713e6e5b66eb252f4a6',
+            },
+            'params': {
+                'skip_download': True,
+            },
+            'expected_warnings': ['Unable to download JSON metadata'],
+        },
+        {
+            'url': 'http://vimeo.com/moogaloop.swf?clip_id=2539741',
+            'only_matching': True,
+        },
+        {
             'url': 'https://vimeo.com/109815029',
             'note': 'Video not completely processed, "failed" seed status',
             'only_matching': True,
         },
         {
             'url': 'https://vimeo.com/groups/travelhd/videos/22439234',
+            'only_matching': True,
+        },
+        {
+            'url': 'https://vimeo.com/album/2632481/video/79010983',
             'only_matching': True,
         },
         {
@@ -369,7 +394,7 @@ class VimeoIE(VimeoBaseInfoExtractor):
         orig_url = url
         if mobj.group('pro') or mobj.group('player'):
             url = 'https://player.vimeo.com/video/' + video_id
-        else:
+        elif any(p in url for p in ('play_redirect_hls', 'moogaloop.swf')):
             url = 'https://vimeo.com/' + video_id
 
         # Retrieve video webpage to extract further information
@@ -630,8 +655,21 @@ class VimeoChannelIE(VimeoBaseInfoExtractor):
                 webpage = self._login_list_password(page_url, list_id, webpage)
                 yield self._extract_list_title(webpage)
 
-            for video_id in re.findall(r'id="clip_(\d+?)"', webpage):
-                yield self.url_result('https://vimeo.com/%s' % video_id, 'Vimeo')
+            # Try extracting href first since not all videos are available via
+            # short https://vimeo.com/id URL (e.g. https://vimeo.com/channels/tributes/6213729)
+            clips = re.findall(
+                r'id="clip_(\d+)"[^>]*>\s*<a[^>]+href="(/(?:[^/]+/)*\1)', webpage)
+            if clips:
+                for video_id, video_url in clips:
+                    yield self.url_result(
+                        compat_urlparse.urljoin(base_url, video_url),
+                        VimeoIE.ie_key(), video_id=video_id)
+            # More relaxed fallback
+            else:
+                for video_id in re.findall(r'id=["\']clip_(\d+)', webpage):
+                    yield self.url_result(
+                        'https://vimeo.com/%s' % video_id,
+                        VimeoIE.ie_key(), video_id=video_id)
 
             if re.search(self._MORE_PAGES_INDICATOR, webpage, re.DOTALL) is None:
                 break
@@ -668,7 +706,7 @@ class VimeoUserIE(VimeoChannelIE):
 
 class VimeoAlbumIE(VimeoChannelIE):
     IE_NAME = 'vimeo:album'
-    _VALID_URL = r'https://vimeo\.com/album/(?P<id>\d+)'
+    _VALID_URL = r'https://vimeo\.com/album/(?P<id>\d+)(?:$|[?#]|/(?!video))'
     _TITLE_RE = r'<header id="page_header">\n\s*<h1>(.*?)</h1>'
     _TESTS = [{
         'url': 'https://vimeo.com/album/2632481',
@@ -688,6 +726,13 @@ class VimeoAlbumIE(VimeoChannelIE):
         'params': {
             'videopassword': 'youtube-dl',
         }
+    }, {
+        'url': 'https://vimeo.com/album/2632481/sort:plays/format:thumbnail',
+        'only_matching': True,
+    }, {
+        # TODO: respect page number
+        'url': 'https://vimeo.com/album/2632481/page:2/sort:plays/format:thumbnail',
+        'only_matching': True,
     }]
 
     def _page_url(self, base_url, pagenum):

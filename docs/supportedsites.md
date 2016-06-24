@@ -44,8 +44,8 @@
  - **appletrailers:section**
  - **archive.org**: archive.org videos
  - **ARD**
- - **ARD:mediathek**: Saarländischer Rundfunk
  - **ARD:mediathek**
+ - **ARD:mediathek**: Saarländischer Rundfunk
  - **arte.tv**
  - **arte.tv:+7**
  - **arte.tv:cinema**
@@ -248,7 +248,6 @@
  - **Gamersyde**
  - **GameSpot**
  - **GameStar**
- - **Gametrailers**
  - **Gazeta**
  - **GDCVault**
  - **generic**: Generic downloader that works on some sites
@@ -386,7 +385,6 @@
  - **MovieFap**
  - **Moviezine**
  - **MPORA**
- - **MSNBC**
  - **MTV**
  - **mtv.de**
  - **mtviggy.com**
