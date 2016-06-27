@@ -454,6 +454,7 @@ from .motherless import MotherlessIE
 from .motorsport import MotorsportIE
 from .movieclips import MovieClipsIE
 from .moviezine import MoviezineIE
+from .msn import MSNIE
 from .mtv import (
     MTVIE,
     MTVServicesEmbeddedIE,
@@ -606,6 +607,7 @@ from .pluralsight import (
     PluralsightCourseIE,
 )
 from .podomatic import PodomaticIE
+from .polskieradio import PolskieRadioIE
 from .porn91 import Porn91IE
 from .pornhd import PornHdIE
 from .pornhub import (
@@ -915,6 +917,7 @@ from .vice import (
     ViceIE,
     ViceShowIE,
 )
+from .vidbit import VidbitIE
 from .viddler import ViddlerIE
 from .videodetective import VideoDetectiveIE
 from .videofyme import VideofyMeIE
